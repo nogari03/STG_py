@@ -13,9 +13,9 @@ def initGame():
     global gamePad, clock, background, fighter
     pygame.init()
     gamePad = pygame.display.set_mode((padWidth, padHeight))
-    pygame.display.set_caption('STG')
-    background = pygame.image.load('source/background.png')
-    fighter = pygame.image.load('source/fighter.png')
+    pygame.display.set_caption('PyShooting')
+    background = pygame.image.load('background.png')
+    fighter = pygame.image.load('fighter.png')
     clock = pygame.time.Clock()
 
 def runGame():
@@ -36,7 +36,24 @@ def runGame():
                 pygame.quit()
                 sys.exit()
 
+            if event.type in [pygame.KEYDOWN]:
+                if event.key == pygame.K_LEFT:
+                    figtherX -= 5
+
+                elif event.key == pygame.K_RIGHT:
+                    figtherX += 5
+
+            if event.type in [pygame.KEYUP]:
+                if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
+                    figtherX = 0
+
         drawObject(background, 0, 0)
+
+        x += figtherX
+        if x < 0:
+            x = 0
+        elif x > padWidth - fighterWidth:
+            x = padWidth - fighterWidth
 
         drawObject(fighter, x, y)
 
