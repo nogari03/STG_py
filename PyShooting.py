@@ -10,16 +10,17 @@ def drawObject(obj, x, y):
     gamePad.blit(obj, (x, y))
 
 def initGame():
-    global gamePad, clock, background, fighter
+    global gamePad, clock, background, fighter, missile
     pygame.init()
     gamePad = pygame.display.set_mode((padWidth, padHeight))
     pygame.display.set_caption('PyShooting')
-    background = pygame.image.load('background.png')
-    fighter = pygame.image.load('fighter.png')
+    background = pygame.image.load('source/background.png')
+    fighter = pygame.image.load('source/fighter.png')
+    missile = pygame.image.load('missile.png')
     clock = pygame.time.Clock()
 
 def runGame():
-    global gamePad, clock, background, fighter
+    global gamePad, clock, background, fighter, missile
 
     fighterSize = fighter.get_rect().size
     fighterWidth = fighterSize[0]
@@ -43,6 +44,11 @@ def runGame():
                 elif event.key == pygame.K_RIGHT:
                     figtherX += 5
 
+                elif event.key == pygame.K_SPACE:
+                    missileX = x + fighterWidth/2
+                    missileY = y - fighterHeight
+                    missileXY.append([missileX,missileY])
+
             if event.type in [pygame.KEYUP]:
                 if event.key == pygame.K_LEFT or event.key == pygame.K_RIGHT:
                     figtherX = 0
@@ -57,6 +63,8 @@ def runGame():
 
         drawObject(fighter, x, y)
 
+
+
         pygame.display.update()
 
         clock.tick(60)
@@ -65,7 +73,6 @@ def runGame():
 
 
 initGame()
-
 runGame()
 
 
